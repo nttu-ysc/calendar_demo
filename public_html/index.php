@@ -1,6 +1,11 @@
 <?php include('header.php') ?>
 <?php include('data.php') ?>
 <?php include('template.php') ?>
+<?php include('navbar_user.php') ?>
+<?php session_start();
+if (!isset($_SESSION['user_logged_in'])) {
+    header('location:login.php');
+} ?>
 <div id="calendar" data-year="<?= date('Y') ?>" data-month="<?= date('m') ?>">
     <div id="header">
         <?= date('Y') ?>/<?= date('m') ?>
@@ -31,7 +36,7 @@
 <div id="info-panel" class="clearfix">
     <div class="close">X</div>
     <form>
-    <input type="hidden" name="id">
+        <input type="hidden" name="id">
         <div class="title">
             <label>event</label><br>
             <input type="text" name="title">
