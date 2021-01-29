@@ -14,11 +14,12 @@ try {
 
 $year = date('Y');
 $month = date('m');
-
-$sql = 'SELECT id, title, `date`, start_time FROM events WHERE year =:year AND month =:month ORDER BY `date`, start_time ASC';
+session_start();
+$sql = 'SELECT id, title, `date`, start_time FROM events WHERE year =:year AND month =:month AND user_id =:user_id ORDER BY `date`, start_time ASC';
 $statement = $pdo->prepare($sql);
 $statement->bindValue(':year', $year, PDO::PARAM_INT);
 $statement->bindValue(':month', $month, PDO::PARAM_INT);
+$statement->bindValue(':user_id', $_SESSION['id'], PDO::PARAM_INT);
 $statement->execute();
 
 $events = $statement->fetchAll(PDO::FETCH_ASSOC);

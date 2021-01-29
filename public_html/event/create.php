@@ -15,19 +15,21 @@ try {
 }
 
 if (empty($_POST['title'])) {
-    new HttpStatusCode(400,'Title cannot be blank.');
+    new HttpStatusCode(400, 'Title cannot be blank.');
 }
 
 $startTime = explode(':', $_POST['start_time']);
 $endTime = explode(':', $_POST['end_time']);
 if ($startTime[0] > $endTime[0] || ($startTime[0] == $endTime[0] && $startTime[1] > $endTime[1])) {
-    new HttpStatusCode(400,'Time range error.');
+    new HttpStatusCode(400, 'Time range error.');
 }
 
-$sql = 'INSERT INTO events (title, year, month, `date`, start_time, end_time, description)
-        VALUE(:title, :year, :month, :date, :start_time, :end_time, :description)';
+session_start();
+$sql = 'INSERT INTO events (title, user_id, year, month, `date`, start_time, end_time, description)
+        VALUE(:title, :user_id, :year, :month, :date, :start_time, :end_time, :description)';
 $statement = $pdo->prepare($sql);
 $statement->bindValue(':title', $_POST['title'], PDO::PARAM_STR);
+$statement->bindValue(':user_id', $_SESSION['id'], PDO::PARAM_INT);
 $statement->bindValue(':year', $_POST['year'], PDO::PARAM_INT);
 $statement->bindValue(':month', $_POST['month'], PDO::PARAM_INT);
 $statement->bindValue(':date', $_POST['date'], PDO::PARAM_INT);
