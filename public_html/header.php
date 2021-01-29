@@ -12,6 +12,7 @@
     <script src="js/jquery-3.5.1.min.js"></script>
     <script src="js/handlebars.min-v4.7.6.js"></script>
     <script src="js/action.js"></script>
+    <script src="js/user.js"></script>
 </head>
 
 <body>
